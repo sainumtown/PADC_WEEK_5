@@ -8,7 +8,7 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
+
 import java.util.List;
 
 import xyz.sainumtown.padc_week5.PADC_WEEK5_APP;
@@ -53,6 +53,10 @@ public class AttractionModel {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        return attractionList;
+    }
+
+    public List<AttractionVO> getAttractionList(){
         return attractionList;
     }
 }
