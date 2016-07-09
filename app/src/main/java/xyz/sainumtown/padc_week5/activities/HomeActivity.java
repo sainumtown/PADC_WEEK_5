@@ -1,22 +1,29 @@
 package xyz.sainumtown.padc_week5.activities;
 
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import org.w3c.dom.Attr;
 
 import xyz.sainumtown.padc_week5.R;
 import xyz.sainumtown.padc_week5.datas.models.AttractionModel;
+import xyz.sainumtown.padc_week5.datas.vos.AttractionVO;
 import xyz.sainumtown.padc_week5.fragments.AttractionFragment;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements AttractionFragment.ControllerAttractionItem {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,16 +37,7 @@ public class HomeActivity extends AppCompatActivity {
                 .replace(R.id.fl_container, fragment)
                 .commit();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-
-                Snackbar.make(view, "Replace with your own action"+ AttractionModel.getInstance().getAttraction(0).getTitle(), Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     @Override
@@ -62,5 +60,17 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onTapEvent(AttractionVO attraction, ImageView ivAttractionPhoto) {
+        Intent intent = AttractionDetailActivity.newIntent(attraction.getTitle());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            String tsName = getResources().getString(R.string.share_element_transistion_attractioin);
+            ActivityOptionsCompat activityOption = ActivityOptionsCompat.makeSceneTransitionAnimation(this, new Pair(ivAttractionPhoto, tsName));
+            ActivityCompat.startActivity(this, intent, activityOption.toBundle());
+        } else {
+            startActivity(intent);
+        }
     }
 }

@@ -1,5 +1,7 @@
 package xyz.sainumtown.padc_week5.fragments;
 
+import android.content.Context;
+import android.media.Image;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -10,10 +12,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import xyz.sainumtown.padc_week5.R;
 import xyz.sainumtown.padc_week5.adapters.AttractionAdapter;
 import xyz.sainumtown.padc_week5.datas.models.AttractionModel;
+import xyz.sainumtown.padc_week5.datas.vos.AttractionVO;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -21,7 +25,13 @@ import xyz.sainumtown.padc_week5.datas.models.AttractionModel;
 public class AttractionFragment extends Fragment {
 
     private AttractionAdapter mAttractionAdapter;
+    private ControllerAttractionItem mControllerAttractionItem;
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mControllerAttractionItem = (ControllerAttractionItem) context;
+    }
 
     public AttractionFragment() {
     }
@@ -34,10 +44,11 @@ public class AttractionFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAttractionAdapter = new AttractionAdapter(AttractionModel.getInstance().getAttractionList());
+        mAttractionAdapter = new AttractionAdapter(AttractionModel.getInstance().getAttractionList(), mControllerAttractionItem);
     }
 
 
@@ -66,5 +77,8 @@ public class AttractionFragment extends Fragment {
         return view;
     }
 
+    public interface ControllerAttractionItem {
+        void onTapEvent(AttractionVO attraction, ImageView ivAttractionPhoto);
+    }
 
 }

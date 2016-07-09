@@ -10,6 +10,7 @@ import java.util.List;
 import xyz.sainumtown.padc_week5.PADC_WEEK5_APP;
 import xyz.sainumtown.padc_week5.R;
 import xyz.sainumtown.padc_week5.datas.vos.AttractionVO;
+import xyz.sainumtown.padc_week5.fragments.AttractionFragment;
 import xyz.sainumtown.padc_week5.views.holders.AttractionViewHolder;
 
 /**
@@ -19,16 +20,19 @@ public class AttractionAdapter extends RecyclerView.Adapter<AttractionViewHolder
 
     private LayoutInflater inflater;
     private List<AttractionVO> attractionList;
+    private AttractionFragment.ControllerAttractionItem mAttractionItemController;
 
-    public AttractionAdapter(List<AttractionVO> attractionList) {
+    public AttractionAdapter(List<AttractionVO> attractionList, AttractionFragment.ControllerAttractionItem controllerAttractionItem) {
         inflater = LayoutInflater.from(PADC_WEEK5_APP.getContext());
         this.attractionList = attractionList;
+        mAttractionItemController = controllerAttractionItem;
     }
 
     @Override
     public AttractionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.view_item_attractions, parent, false);
-        AttractionViewHolder attractionVH = new AttractionViewHolder(view);
+        AttractionViewHolder attractionVH = new AttractionViewHolder(view,mAttractionItemController);
+
         return attractionVH;
     }
 

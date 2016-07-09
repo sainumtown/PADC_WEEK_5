@@ -56,7 +56,15 @@ public class AttractionModel {
         return attractionList;
     }
 
-    public List<AttractionVO> getAttractionList(){
+    public List<AttractionVO> getAttractionList() {
         return attractionList;
+    }
+
+    public AttractionVO getAttractionByTitle(String attractionTitle) {
+        for (AttractionVO attraction : attractionList) {
+            if (attraction.getTitle().equals(attractionTitle))
+                return attraction;
+        }
+        return null;
     }
 }
